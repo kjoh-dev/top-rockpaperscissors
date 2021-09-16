@@ -1,3 +1,75 @@
+/*
+Write a NEW function called game(). Use the previous function inside of this one to play a 5 round game that keeps score and reports a winner or loser at the end. 
+- Use prompt() to get input from the user.
+
+A. Inside Game() function:
+
+1. Set playerSelection with player's input using prompt().
+2. Check for input validity using CheckInputValidity().
+*/
+let playerSelection = GetPlayerPlay();
+
+function CheckInputValidity(playerSelection){
+    if(playerSelection.toUpperCase() === "ROCK" || playerSelection.toUpperCase() === "PAPER" || playerSelection.toUpperCase() === "SCISSORS"){
+        return "valid";
+    }
+    else if(playerSelection ?? true){
+        return "quit";
+    }
+    else {
+        return "invalid";
+    }
+}
+
+function GetPlayerPlay(){
+    const input = prompt("What's your play?", "");
+    let inputValidity = CheckInputValidity(input);
+    if(inputValidity === "valid"){
+        return input;
+    } else if (inputValidity === "invalid"){
+        return GetPlayerPlay();
+    } else {
+        return null;
+    }
+}
+
+/*
+3. Format playerSelection using CapitalizeString().
+*/
+if (playerSelection ?? true){
+    console.log("Quit Game");
+} else {
+    playerSelection = CapitalizeString(playerSelection);
+}
+
+const CapitalizeString = (queryString) => {
+    if(typeof queryString !== "string"){
+        return "";
+    }
+    else if(queryString.length < 2){
+        return queryString.toUpperCase();
+    }
+    else{
+        return queryString.charAt(0).toUpperCase() + queryString.slice(1).toLowerCase();
+    }
+}
+
+/*
+4. a) If invalid input, go back to step #1. (Display warning?)
+4. b) If valid input, proceed to step #5.
+5. Get/Set computerSelection using ComputerPlay().
+6. Get round result using PlayRound().
+7. Display round result using console.log().
+8. Keep score using (). Until 5 rounds are up.
+9. a) If 5 rounds are not up, go to step #1.
+9. b) If 5 rounds are up, proceed to the next step.
+10. Declare winner and display final score.
+*/
+
+
+
+
+
 
 /* 1. Make a function called "computerPlay" that returns either "Rock", "Paper" or "Scissors". 
 - There are 3 possible combinations: Rock/Paper/Scissors.
@@ -32,22 +104,10 @@ Write a function that plays a single round of Rock Paper Scissors. The function 
 /*
 1. Input Variables: playerSelection = string, case-insensitive; computerSelection = string.
 */
-let playerSelection = "pAper";
 let computerSelection = ComputerPlay();
 
-const CapitalizeString = (queryString) => {
-    if(typeof queryString !== "string"){
-        return "";
-    }
-    else if(queryString.length < 2){
-        return queryString.toUpperCase();
-    }
-    else{
-        return queryString.charAt(0).toUpperCase() + queryString.slice(1).toLowerCase();
-    }
-}
 
-playerSelection = CapitalizeString(playerSelection);
+
 /*
 Play outcomes:
 1. Player plays Rock against Computer's:
@@ -118,3 +178,14 @@ console.log(PlayRound(playerSelection, computerSelection));
 /*
 2. Output Variable: string that incorporates 1) win/loss, 2) player and computer selections (inputs).
 */
+
+
+
+
+
+
+
+
+function Game(){
+
+}
