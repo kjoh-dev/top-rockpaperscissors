@@ -18,6 +18,8 @@ A. Inside Game() function:
 9. b) If 5 rounds are up, proceed to the next step.
 10. Declare winner and display final score.
 */
+Game();
+
 function Game(){
     
     const ROCK = "Rock";
@@ -27,17 +29,18 @@ function Game(){
     const LOSE = "Lose";
     const TIE = "Tie";
     
-    let roundNumber = 0;
+    const ROUNDSPERGAME = 5;
+    let roundNumber = 1;
     let playerScore = 0;
     let computerScore = 0;
-    let roundResult; 
+    let roundResult = null; 
     
-    let playerSelection;
-    let computerSelection;
-    
-    for (i = roundNumber; i < roundNumber; roundNumber++){
-        playerSelection = GetPlayerPlay();
-        if (playerSelection ?? true){
+    let playerSelection = null;
+    let computerSelection = null;
+
+    for (i = 1; i <= ROUNDSPERGAME; i++){
+        GetPlayerPlay();
+        if (playerSelection === null){
             console.log("Quit Game");
             return;
         } 
@@ -45,6 +48,7 @@ function Game(){
 
         computerSelection = ComputerPlay();
 
+        roundNumber = i;
         roundResult = PlayRound();
         UpdateScore();
         ShowRoundResult();
@@ -54,30 +58,28 @@ function Game(){
 
 
     function CheckInputValidity(){
-        if(playerSelection.toUpperCase() === "ROCK" || playerSelection.toUpperCase() === "PAPER" || playerSelection.toUpperCase() === "SCISSORS"){
-            return "valid";
-        }
-        else if(playerSelection ?? true){
+        if(playerSelection === null){
             return "quit";
-        }
-        else {
+        } else if (playerSelection.toUpperCase() === "ROCK" || playerSelection.toUpperCase() === "PAPER" || playerSelection.toUpperCase() === "SCISSORS"){
+            return "valid";
+        } else {
             return "invalid";
         }
     }
 
     function GetPlayerPlay(){
-        const input = prompt("What's your play?", "");
-        let inputValidity = CheckInputValidity(input);
-        if(inputValidity === "valid"){
-            return input;
+        playerSelection = prompt("What's your play? Rock/Paper/Scissors", "");
+        let inputValidity = CheckInputValidity(playerSelection);
+        if (inputValidity === "valid"){
+            return;
         } else if (inputValidity === "invalid"){
-            return GetPlayerPlay();
+            GetPlayerPlay();
         } else {
-            return null;
+            playerSelection = null;
         }
     }
         
-    const CapitalizeString = (queryString) => {
+    function CapitalizeString(queryString){
         if(typeof queryString !== "string"){
             return "";
         }
@@ -154,7 +156,7 @@ function Game(){
         } 
         
         if(roundResult === LOSE){
-            ++computerSelection;
+            ++computerScore;
         }
     }
 
@@ -171,7 +173,7 @@ function Game(){
     function ShowScore(){
         let heading;
         let finalWinner;
-        if(roundNumber < 5){
+        if(roundNumber < ROUNDSPERGAME){
             heading = `Round ${roundNumber} Score`;
             finalWinner = "";
         }
@@ -179,9 +181,10 @@ function Game(){
             heading = `Final Score`;
             if(playerScore > computerScore){
                 finalWinner = "Player Wins!";
-            }
-            else{
+            } else if (playerScore < computerScore){
                 finalWinner = "Computer Wins!";
+            } else{
+                finalWinner = "Tied. You both Lose!"
             }
         }
         console.log(heading);
