@@ -4,12 +4,12 @@
 - Generate a random number between 0 to 99.
 - 0-32=Rock, 33-65=Paper, 66-98=Scissors, 99=reroll.
 */
-function computerPlay() {
+function ComputerPlay() {
     let play;
     let randomNumber = Math.floor(Math.random()*100);
     switch(true){
         case randomNumber>98:
-            play = computerPlay();
+            play = ComputerPlay();
             break;
         case randomNumber>65:
             play = "Scissors";
@@ -33,9 +33,9 @@ Write a function that plays a single round of Rock Paper Scissors. The function 
 1. Input Variables: playerSelection = string, case-insensitive; computerSelection = string.
 */
 let playerSelection = "pAper";
-let computerSelection = computerPlay();
+let computerSelection = ComputerPlay();
 
-const capitalizeString = (queryString) => {
+const CapitalizeString = (queryString) => {
     if(typeof queryString !== "string"){
         return "";
     }
@@ -47,7 +47,7 @@ const capitalizeString = (queryString) => {
     }
 }
 
-playerSelection = capitalizeString(playerSelection);
+playerSelection = CapitalizeString(playerSelection);
 /*
 Play outcomes:
 1. Player plays Rock against Computer's:
@@ -63,7 +63,7 @@ Play outcomes:
  - Paper = Player Win,
  - Scissors = Tie. 
 */
-function playRound(playerSelection, computerSelection){
+function PlayRound(playerSelection, computerSelection){
     const ROCK = "Rock";
     const PAPER = "Paper";
     const SCISSORS = "Scissors";
@@ -114,7 +114,7 @@ function playRound(playerSelection, computerSelection){
     }
 }
 
-console.log(playRound(playerSelection, computerSelection));
+console.log(PlayRound(playerSelection, computerSelection));
 /*
 2. Output Variable: string that incorporates 1) win/loss, 2) player and computer selections (inputs).
 */
