@@ -151,7 +151,9 @@ function Game(){
     function UpdateScore(){
         if(roundResult === WIN){
             ++playerScore;
-        } else(roundResult === LOSE){
+        } 
+        
+        if(roundResult === LOSE){
             ++computerSelection;
         }
     }
