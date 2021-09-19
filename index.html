@@ -4,9 +4,29 @@
         <meta charset="utf-8">
         <title>Rock Paper Scissors</title>
         <link rel="stylesheet" href="css/style.css">
+        <script src="js/script.js" defer></script> 
     </head>
     <body>
-        
-        <script src="js/script.js"></script> 
+        <!-- <div id="score-board">
+            <div data-score="round-number" class="score"></div>
+            <div data-score="score-heading" class="score"></div>
+            <div data-score="player-score" class="score"></div>
+            <div data-score="computer-score" class="score"></div>
+            <div data-score="current-standing" class="score"></div>
+        </div> -->
+        <main>
+            <div id="player-display">            
+                <img id="player-move-image" src="img/rps-all.png" alt="Hand(s) showing player's rock/paper/scissors gestures">
+                <div id="buttons-container">
+                    <button class="rock">Rock</button>
+                    <button class="paper">Paper</button>
+                    <button class="scissors">Scissors</button>
+                </div>
+            </div>
+            <div id="vs">VS</div>
+            <div id="computer-display">
+                <img id="computer-move-image" src="img/move-hidden.png" alt="Hand(s) showing computer's rock/paper/scissors gestures">
+            </div>
+        </main>
     </body>
 </html>

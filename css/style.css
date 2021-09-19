@@ -1,0 +1,66 @@
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+
+#player-display{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: stretch;
+    gap: 32px;
+    border: 3px solid red;
+}
+
+#vs {
+    display: none;
+    font-size: 48px;
+    text-shadow: 3px 3px 3px grey;
+    padding: 16px;
+    align-self: center;
+    border: 3px solid black;
+
+}
+
+#computer-display{
+    border: 3px solid yellow;
+
+}
+#computer-move-image{
+    display: none;
+}
+
+img, #buttons-container {
+    min-width: 360px;
+    flex: 1 1 0;
+}
+
+img {
+    margin: auto;
+    max-width: 720px;
+    width: 100%;
+    height: auto;
+    border: 1px solid blue;
+}
+
+#buttons-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: start;
+    column-gap: 16px;
+    border: 1px solid green;
+    
+}
+
+button {
+    max-width: 216px;
+    min-width: 96px;
+    width: 100%;
+    height: auto;
+    flex: 1 1 0;
+    font-size: 20px;
+}
