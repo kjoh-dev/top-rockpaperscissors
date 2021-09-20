@@ -1,3 +1,10 @@
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+
 main {
     display: flex;
     flex-direction: column;
@@ -5,34 +12,58 @@ main {
     align-items: center;
 }
 
-#player-display{
+.player-display{
     display: flex;
     flex-direction: column;
     justify-content: start;
     align-items: stretch;
     gap: 32px;
     border: 3px solid red;
+
+
+}
+.player-move-image{
+    transition-property: flex-direction, transform;
+    transition-duration: 2s, 2s;
+    transition-timing-function: ease;
 }
 
-#vs {
-    display: none;
-    font-size: 48px;
-    text-shadow: 3px 3px 3px grey;
-    padding: 16px;
+/* //Transition:
+//1. margin: -500px --> 0px
+//2. font-size: 96px --> 48px
+//3. color: alpha 0 --> 1
+//4. text-shadow: alpha 0 --> 1
+//5. display: block  */
+.vs {
+    display: block;
+    opacity: 0;
+    font-size: 0px;
+    color: rgba(0, 0, 0);
+    text-shadow: 3px 3px 3px rgb(128, 128, 128);
+    padding: 0px;
+    margin: 0px -500px;
     align-self: center;
-    border: 3px solid black;
-
+    z-index: 3;
+    transition-property: margin, font-size, opacity;
+    transition-duration: 1s;
+    border: 3px solid rgb(0, 0, 0);
+}
+.vs-transition{
+    opacity: 1;
+    font-size: 48px;
+    margin: 0px 0px; 
 }
 
-#computer-display{
+.computer-display{
     border: 3px solid yellow;
 
 }
-#computer-move-image{
+.computer-move-image{
     display: none;
+    transform: scaleX(-1);
 }
 
-img, #buttons-container {
+img, .buttons-container {
     min-width: 360px;
     flex: 1 1 0;
 }
@@ -45,7 +76,7 @@ img {
     border: 1px solid blue;
 }
 
-#buttons-container {
+.buttons-container {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;

@@ -25,7 +25,8 @@ C. Game Over Screen:
 const rockButton = document.querySelector(".rock");
 const paperButton = document.querySelector(".paper");
 const scissorsButton = document.querySelector(".scissors");
-const buttonsContainer = document.querySelector("#buttons-container");
+const buttonsContainer = document.querySelector(".buttons-container");
+const vs = document.querySelector(".vs");
 
 const PLAYER_DEFAULT = "player-default";
 const ROCK = "rock";
@@ -50,6 +51,8 @@ for (let i = 0; i < buttonsContainer.childElementCount; i++) {
 
 }
 
+vs.addEventListener("transitionend", computerPlay);
+
 //Run after computer move layout transition complete:
 //computerPlay();
 // calcRound();
@@ -60,7 +63,7 @@ for (let i = 0; i < buttonsContainer.childElementCount; i++) {
 // showScore()
 
 function computerPlay() {
-    let randomNumber = Math.floor(Math.random()*100);
+    const randomNumber = Math.floor(Math.random()*100);
     switch(true){
         case randomNumber>98:
             computerSelection = ComputerPlay();
@@ -75,6 +78,9 @@ function computerPlay() {
             computerSelection = ROCK;
             break;
     }
+
+    const computerMoveImage = document.querySelector(".computer-move-image");
+    showMoveImage(computerSelection, computerMoveImage);
 }
 
 function calcRound(){
@@ -187,7 +193,7 @@ function showMoveImage(move, imageElement){
 }
 
 function toggleComputerMoveImage(){
-    const computerMoveImage = document.querySelector("#computer-move-image");
+    const computerMoveImage = document.querySelector(".computer-move-image");
     const computedStyle = window.getComputedStyle(computerMoveImage);
     const displayValue = computedStyle.getPropertyValue("display");
     if(displayValue === "none"){
@@ -199,19 +205,20 @@ function toggleComputerMoveImage(){
 }
 
 function toggleVS(){
-    const vs = document.querySelector("#vs");
-    const computedStyle = window.getComputedStyle(vs);
-    const displayValue = computedStyle.getPropertyValue("display");
-    if(displayValue === "none"){
-        vs.style.display = "block";
+    const vsTransition = vs.classList.contains("vs-transition");
+    if (vsTransition) {
+        
+        vs.classList.remove("vs-transition");
     }
     else{
-        vs.style.display = "none";
+        vs.style.fontSize = "96px";
+
+        vs.classList.add("vs-transition");
     }
 }
 
 function showPlayerMoveImage(e){
-    const playerMoveImage = document.querySelector("#player-move-image");
+    const playerMoveImage = document.querySelector(".player-move-image");
 
     if (e.type === "mouseleave" && buttonsHidden !== true) {
         showMoveImage(PLAYER_DEFAULT, playerMoveImage);
