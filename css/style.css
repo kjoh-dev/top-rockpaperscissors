@@ -12,9 +12,8 @@ main {
     align-items: center;
 }
 
-footer {
-    justify-self: center;
-    align-self: stretch;
+p {
+    margin: 16px 0px;
     padding: 16px 0px;
     text-align: center;
     font-size: 32px;
@@ -22,9 +21,7 @@ footer {
     border-top: 1px groove blue;
     border-bottom: 3px groove navy;
 }
-footer>button{
-    font-style: italic;
-} 
+
 .hidden {
     opacity: 0;
     font-size: 0px;
@@ -32,14 +29,6 @@ footer>button{
     margin: 0px;
 }
 
-.player-display{
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: stretch;
-    gap: 32px;
-    border: 3px solid red;
-}
 .player-move-image{
     transition-property: flex-direction, transform;
     transition-duration: 2s, 2s;
@@ -56,13 +45,13 @@ footer>button{
     margin: 0px -500px;
     align-self: center;
     z-index: 3;
-    transition-property: margin, font-size, opacity;
-    transition-duration: 1.5s;
-    border: 3px solid rgb(0, 0, 0);
+    /* transition-property: margin, font-size, opacity;
+    transition-duration: 1.5s; */
+    /* border: 3px solid rgb(0, 0, 0); */
 }
 .vs-transition{
     opacity: 1;
-    font-size: 48px;
+    /* font-size: 48px; */
     margin: 0px 0px; 
 }
 
@@ -71,28 +60,35 @@ footer>button{
     transform: scaleX(-1);
 }
 
-img, .buttons-container {
+img, .play-buttons, .round-end-buttons {
     min-width: 360px;
+    max-width: 720px;
     flex: 1 1 0;
 }
 
 img {
     margin: auto;
-    max-width: 720px;
     width: 100%;
     height: auto;
-    border: 1px solid blue;
+    /* border: 1px solid blue; */
 }
 
-.buttons-container {
+.play-buttons, .round-end-buttons {
+    width: 100%;
+    max-width: 640px;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: start;
     column-gap: 16px;
-    border: 1px solid green;
-    
+    /* border: 1px solid green; */
+    margin-top: 16px;
+}
+.round-end-buttons {
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
 }
 
 button {
