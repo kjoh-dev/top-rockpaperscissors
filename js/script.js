@@ -27,11 +27,26 @@ const paperButton = document.querySelector(".paper");
 const scissorsButton = document.querySelector(".scissors");
 const buttonsContainer = document.querySelector(".buttons-container");
 const vs = document.querySelector(".vs");
+const footer = document.querySelector("footer");
 
 const PLAYER_DEFAULT = "player-default";
 const ROCK = "rock";
 const PAPER = "paper";
 const SCISSORS = "scissors";
+const WIN = "win";
+const LOSE = "lose";
+const TIE = "tie";
+
+//List of trigger keywords for message display at different stages of the game:
+const PLAYERCHOOSE = "player-choose";       //Choose your play.
+const PLAYERSELECTED = "player-selected";   //You chose ${playerSelection}.
+const WAITFORREVEAL = "wait-for-reveal";    //Computer chose...
+const COMPUTERREVEAL = "computer-reveal";   //Computer chose ${computerSelection}
+const ASSESSROUND = "assess-round";         //${playerSelection} beats/loses to ${computerSelection}.
+const ROUNDWINNER = "round-winner";         //You Lose/Win
+const SCORES = "scores";                    //Display current scores
+const MATCHRESULTS = "match-results";       //Display final scores and match winner
+
 
 let buttonsHidden = false;
 let playerSelection = null;
@@ -53,25 +68,19 @@ for (let i = 0; i < buttonsContainer.childElementCount; i++) {
 
 vs.addEventListener("transitionend", computerPlay);
 
-//Run after computer move layout transition complete:
-//computerPlay();
-// calcRound();
-// calcScore();
+showNotification(PLAYERCHOOSE);
 
-//Need to be accompanied by relevant html elements before full implementation:
-//showRoundResult()
-// showScore()
 
-function computerPlay() {
-    const randomNumber = Math.floor(Math.random()*100);
+function computerPlay(e) {
+    if(e.propertyName !== "opacity")
+    return;
+
+    const randomNumber = Math.floor(Math.random()*100)+1;
     switch(true){
-        case randomNumber>98:
-            computerSelection = ComputerPlay();
-            break;
-        case randomNumber>65:
+        case randomNumber>66:
             computerSelection = SCISSORS;
             break;
-        case  randomNumber>32:
+        case  randomNumber>33:
             computerSelection = PAPER;
             break;
         default:
@@ -80,7 +89,35 @@ function computerPlay() {
     }
 
     const computerMoveImage = document.querySelector(".computer-move-image");
-    showMoveImage(computerSelection, computerMoveImage);
+    setTimeout(function() {
+        showMoveImage(computerSelection, computerMoveImage);
+        showNotification(COMPUTERREVEAL);
+
+        calcRound();
+        calcScore();
+    
+        setTimeout(function() {
+            showNotification(ASSESSROUND);
+            setTimeout(function() {
+                showNotification(ROUNDWINNER);
+                setTimeout(function() {
+                    showNotification(SCORES);
+
+                    if(playerScore === 5 || computerScore === 5){
+                        setTimeout(function() {
+                            showNotification(MATCHRESULTS);
+                            document.querySelector(".next-match").classList.remove("hidden");
+                            // footer.lastElementChild.classList.remove("hidden");
+                        }, 1000);
+                    } else{
+
+                        document.querySelector(".next-round").classList.remove("hidden");
+                        // footer.firstElementChild.classList.remove("hidden");
+                    }
+                }, 1000);
+            }, 1000);
+        }, 1000);
+    }, 1000);
 }
 
 function calcRound(){
@@ -117,6 +154,59 @@ function calcRound(){
             console.log(`Error - Unaccounted for combo. Player's ${playerSelection} vs. Computer's ${computerSelection}.`)
             break;
     }
+}
+
+function showNotification(keyword){
+    let message;
+    switch(true){
+        case (keyword === PLAYERCHOOSE):
+            message = "\u2191 \u2191 \u2191 WHAT'S YOUR PLAY? \u2191 \u2191 \u2191";
+            break;
+        case (keyword === PLAYERSELECTED):
+            message = `YOU CHOSE ${playerSelection.toUpperCase()}`;
+            break;
+        case (keyword === WAITFORREVEAL):
+            message = "COMPUTER CHOSE...";
+            break;
+        case (keyword === COMPUTERREVEAL):
+            message = `${computerSelection.toUpperCase()}!`;
+            break;
+        case (keyword === ASSESSROUND):
+            if (roundResult === WIN) {
+                message = `${playerSelection.toUpperCase()} BEATS ${computerSelection.toUpperCase()}!`;
+            } else if(roundResult === LOSE){
+                message = `${playerSelection.toUpperCase()} LOSES TO ${computerSelection.toUpperCase()}!`;
+            } else {
+                message = `${playerSelection.toUpperCase()} TIES ${computerSelection.toUpperCase()}!`;
+            }
+            break;
+        case (keyword === ROUNDWINNER):
+            if (roundResult === WIN) {
+                message = "YOU WIN!";
+            } else if(roundResult === LOSE){
+                message = "YOU LOSE!";
+            } else {
+                message = "IT'S A TIE!";
+            }
+            break;
+        case (keyword === SCORES):
+                message = `ROUND ${roundNumber} SCORE:
+                PLAYER: ${playerScore}
+                COMPUTER: ${computerScore}`;
+            break;
+        case (keyword === MATCHRESULTS):
+                if (playerScore > computerScore) {
+                    message = "PLAYER WINS THE MATCH!";                    
+                } else {
+                    message = "COMPUTER WINS THE MATCH!";
+                }
+            break;
+        default:
+            message = `Error - no match for keyword, ${keyword}`;
+            break;
+    }
+
+    footer.textContent = message;
 }
 
 function calcScore(){
@@ -170,10 +260,14 @@ function setPlayerMove(e){
             alert(`Error - Unexpected play choice: ${move}`);
             break;
     }
+
+    showNotification(PLAYERSELECTED);
+    setTimeout(function () {
+        showNotification(WAITFORREVEAL);
+    }, 1000);
 }
 
 function showMoveImage(move, imageElement){
-
     switch (true) {
         case (move === PLAYER_DEFAULT):
             imageElement.src = "img/rps-all.png";
@@ -220,15 +314,20 @@ function toggleVS(){
 function showPlayerMoveImage(e){
     const playerMoveImage = document.querySelector(".player-move-image");
 
-    if (e.type === "mouseleave" && buttonsHidden !== true) {
-        showMoveImage(PLAYER_DEFAULT, playerMoveImage);
-    } else {
-        showMoveImage(e.target.className, playerMoveImage);
-    }
-    //Hide buttons after player move selection
-    if (e.type === "click") {
-        buttonsContainer.style.display = "none";
-        buttonsHidden = true;
+    if (!buttonsHidden) {
+        if (e.type === "mouseleave") {
+            showMoveImage(PLAYER_DEFAULT, playerMoveImage);
+            return;
+        }
+        if (e.type === "mouseenter"){
+            showMoveImage(e.target.className, playerMoveImage);
+            return;
+        }
+        if (e.type === "click") {
+            buttonsContainer.style.display = "none";
+            buttonsHidden = true;
+            return;
+        } 
     }
 }
 

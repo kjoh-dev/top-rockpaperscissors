@@ -12,6 +12,26 @@ main {
     align-items: center;
 }
 
+footer {
+    justify-self: center;
+    align-self: stretch;
+    padding: 16px 0px;
+    text-align: center;
+    font-size: 32px;
+    font-style: normal;
+    border-top: 1px groove blue;
+    border-bottom: 3px groove navy;
+}
+footer>button{
+    font-style: italic;
+} 
+.hidden {
+    opacity: 0;
+    font-size: 0px;
+    padding: 0px;
+    margin: 0px;
+}
+
 .player-display{
     display: flex;
     flex-direction: column;
@@ -19,8 +39,6 @@ main {
     align-items: stretch;
     gap: 32px;
     border: 3px solid red;
-
-
 }
 .player-move-image{
     transition-property: flex-direction, transform;
@@ -28,12 +46,6 @@ main {
     transition-timing-function: ease;
 }
 
-/* //Transition:
-//1. margin: -500px --> 0px
-//2. font-size: 96px --> 48px
-//3. color: alpha 0 --> 1
-//4. text-shadow: alpha 0 --> 1
-//5. display: block  */
 .vs {
     display: block;
     opacity: 0;
@@ -45,7 +57,7 @@ main {
     align-self: center;
     z-index: 3;
     transition-property: margin, font-size, opacity;
-    transition-duration: 1s;
+    transition-duration: 1.5s;
     border: 3px solid rgb(0, 0, 0);
 }
 .vs-transition{
@@ -54,10 +66,6 @@ main {
     margin: 0px 0px; 
 }
 
-.computer-display{
-    border: 3px solid yellow;
-
-}
 .computer-move-image{
     display: none;
     transform: scaleX(-1);
