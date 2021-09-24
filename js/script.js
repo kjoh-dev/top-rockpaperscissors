@@ -190,7 +190,7 @@ function showNotification(keyword) {
     let message = ``;
     switch (true) {
         case (keyword === PLAYERCHOOSE):
-            message = "\u2191 \u2191 \u2191 WHAT'S YOUR PLAY? \u2191 \u2191 \u2191";
+            message = "\u2191 WHAT'S YOUR PLAY? \u2191";
             break;
         case (keyword === PLAYERSELECTED):
             message = `YOU CHOSE ${playerSelection.toUpperCase()}`;
@@ -340,7 +340,7 @@ function toggleVS() {
         vs.classList.remove("vs-transition");
     }
     else {
-        vs.style.fontSize = "96px";
+        vs.style.fontSize = "102px";
         vs.style.transition = "margin, font-size, opacity";
         vs.style.transitionDuration = "1.5s"
         vs.classList.add("vs-transition");

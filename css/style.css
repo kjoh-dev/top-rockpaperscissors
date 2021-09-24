@@ -1,8 +1,15 @@
 body{
+    font-family: "Luckiest Guy", sans-serif;
     display: flex;
     flex-direction: column;
     justify-content: start;
     align-items: center;
+}
+
+header {
+    font-size: 32px;
+    margin-bottom: 16px;
+    border-bottom: 3px double navy;
 }
 
 main {
@@ -10,13 +17,14 @@ main {
     flex-direction: column;
     justify-content: start;
     align-items: center;
+    gap: 24px;
 }
 
 p {
     margin: 16px 0px;
     padding: 16px 0px;
     text-align: center;
-    font-size: 32px;
+    font-size: 36px;
     font-style: normal;
     border-top: 1px groove blue;
     border-bottom: 3px groove navy;
@@ -45,13 +53,9 @@ p {
     margin: 0px -500px;
     align-self: center;
     z-index: 3;
-    /* transition-property: margin, font-size, opacity;
-    transition-duration: 1.5s; */
-    /* border: 3px solid rgb(0, 0, 0); */
 }
 .vs-transition{
     opacity: 1;
-    /* font-size: 48px; */
     margin: 0px 0px; 
 }
 
@@ -92,10 +96,11 @@ img {
 }
 
 button {
+    font-family: "Bangers", sans-serif;
+    font-size: 36px;
     max-width: 216px;
     min-width: 96px;
     width: 100%;
     height: auto;
     flex: 1 1 0;
-    font-size: 20px;
 }
