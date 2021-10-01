@@ -68,6 +68,7 @@ for (let i = 0; i < playButtons.childElementCount; i++) {
     button.addEventListener("click", setPlayerMove);
     button.addEventListener("click", togglePlayerMoveButtons);
     button.addEventListener("click", toggleComputerMoveLayout);
+    button.addEventListener("click", playSound);
 
 }
 
@@ -83,6 +84,22 @@ showNotification(PLAYERCHOOSE);
 
 
 //Start of Functions Definitions
+function playSound(e) {
+    let audio;
+    if(typeof e === "string"){
+        audio = document.querySelector(`audio[data-play="${e}"]`);
+    } else {
+        audio = document.querySelector(`audio[data-play="${e.target.className}"]`);
+    }
+
+    // const play = document.querySelector(`button[data-play="${e.target.className}"]`);
+    if (!audio) return;
+
+    // key.classList.add('playing');
+    audio.currentTime = 0;
+    audio.play();
+}
+
 function resetStats() {
     roundResult = 0;
     roundNumber = 0;
@@ -123,6 +140,7 @@ function computerPlay(e) {
     }
 
     setTimeout(function () {
+        playSound(computerSelection);
         showMoveImage(computerSelection, computerMoveImage);
         showNotification(COMPUTERREVEAL);
 

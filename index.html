@@ -21,9 +21,9 @@
             </div>
         </main>
         <div class="play-buttons">
-            <button class="rock">ROCK</button>
-            <button class="paper">PAPER</button>
-            <button class="scissors">SCISSORS</button>
+            <button data-play="rock" class="rock">ROCK</button>
+            <button data-play="paper" class="paper">PAPER</button>
+            <button data-play="scissors" class="scissors">SCISSORS</button>
         </div>
         <div class="round-end-buttons">
             <button class="hidden next-round">NEXT ROUND >>></button>
@@ -31,5 +31,8 @@
         </div>
 
         <p></p>
+        <audio data-play="rock" src="wav/punch.wav"></audio>
+        <audio data-play="paper" src="wav/slap.wav"></audio>
+        <audio data-play="scissors" src="wav/scissors_2.wav"></audio>
     </body>
 </html>
