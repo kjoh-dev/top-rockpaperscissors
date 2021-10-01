@@ -1,37 +1,16 @@
-/*Vision:
-TOP Requirements:
-- Buttons for player moves: rock, paper and scissors.
-- Display results: running score and announce winner (player/computer to win 5 rounds).
-Additional Considerations and Organization:
-A. Title Screen:
-    1. Title
-    2. Graphic
-    3. Start Button
-B. Player Move Screen:
-    1. Show Header with Player Score and Computer Score.
-    2. Show Buttons for each move: Rock, Paper and Scissors
-    3. Show Graphic representing each move
-    4. Selected graphic movement to center-left while the rest fade out.
-    5. Computer move selection: show selection animation.
-    6. Show round result. Update scores.
-    7. Show final score and leader if applicable. Else, go to next round (repeat B).
-C. Game Over Screen:
-    1. Announce winner. (Center and move to top?)
-    2. Show final scores and number of rounds taken.
-    3. Show button for Play Again.
-
-*/
 
 const rockButton = document.querySelector(".rock");
 const paperButton = document.querySelector(".paper");
 const scissorsButton = document.querySelector(".scissors");
 const playButtons = document.querySelector(".play-buttons");
 const vs = document.querySelector(".vs");
+const startMatchButton = document.querySelector(".start");
 const nextRoundButton = document.querySelector(".next-round");
 const nextMatchButton = document.querySelector(".next-match");
 const notificationPanel = document.querySelector("p");
 const playerMoveImage = document.querySelector(".player-move-image");
 const computerMoveImage = document.querySelector(".computer-move-image");
+let narrowView = window.matchMedia("(max-width: 600px)");
 
 const PLAYER_DEFAULT = "player-default";
 const COMPUTER_DEFAULT = "computer-default";
@@ -43,6 +22,7 @@ const LOSE = "lose";
 const TIE = "tie";
 
 //List of trigger keywords for message display at different stages of the game:
+const STARTMATCH = "start-match";           //Start
 const PLAYERCHOOSE = "player-choose";       //Choose your play.
 const PLAYERSELECTED = "player-selected";   //You chose ${playerSelection}.
 const WAITFORREVEAL = "wait-for-reveal";    //Computer chose...
@@ -72,30 +52,29 @@ for (let i = 0; i < playButtons.childElementCount; i++) {
 
 }
 
+startMatchButton.addEventListener("click", startMatch);
 nextRoundButton.addEventListener("click", continueToNextRound);
 nextMatchButton.addEventListener("click", beginNewMatch);
 
 vs.addEventListener("transitionend", computerPlay);
 
-//End of Initializations
 
-showNotification(PLAYERCHOOSE);
+showNotification(STARTMATCH);
+//End of Initializations
 
 
 
 //Start of Functions Definitions
 function playSound(e) {
     let audio;
-    if(typeof e === "string"){
+    if (typeof e === "string") {
         audio = document.querySelector(`audio[data-play="${e}"]`);
     } else {
         audio = document.querySelector(`audio[data-play="${e.target.className}"]`);
     }
 
-    // const play = document.querySelector(`button[data-play="${e.target.className}"]`);
     if (!audio) return;
 
-    // key.classList.add('playing');
     audio.currentTime = 0;
     audio.play();
 }
@@ -107,19 +86,34 @@ function resetStats() {
     computerScore = 0;
 }
 
-function continueToNextRound() {
+function continueToNextRound(e) {
     nextRoundButton.classList.add("hidden");
     nextMatchButton.classList.add("hidden");
 
     showMoveImage(COMPUTER_DEFAULT, computerMoveImage);
-    toggleComputerMoveLayout();
+    toggleComputerMoveLayout(e);
     togglePlayerMoveButtons();
     showNotification(PLAYERCHOOSE);
 }
 
-function beginNewMatch() {
+function startMatch() {
+    const credits = document.querySelector(".credits");
+    // const roundEndButtonsContainer
+
+    credits.classList.add("hidden");
+    startMatchButton.classList.add("hidden");
+    playButtons.classList.remove("hidden");
+    for (let i = 0; i < playButtons.childElementCount; i++) {
+        const button = playButtons.children[i];
+        button.classList.remove("hidden");
+    }
+
+    showNotification(PLAYERCHOOSE);
+}
+
+function beginNewMatch(e) {
     resetStats();
-    continueToNextRound();
+    continueToNextRound(e);
 }
 
 function computerPlay(e) {
@@ -207,6 +201,9 @@ function calcRound() {
 function showNotification(keyword) {
     let message = ``;
     switch (true) {
+        case (keyword === STARTMATCH):
+            message = "\u2191 PLAY A MATCH? \u2191";
+            break;
         case (keyword === PLAYERCHOOSE):
             message = "\u2191 WHAT'S YOUR PLAY? \u2191";
             break;
@@ -396,23 +393,31 @@ function togglePlayerMoveButtons() {
 }
 
 //Toggles computer move screen layout on/off.
-function toggleComputerMoveLayout() {
+function toggleComputerMoveLayout(e) {
     const mainElement = document.querySelector("main");
-    const compStyles = window.getComputedStyle(mainElement);
+    const buttonClicked = e.target;
 
-    if (compStyles.getPropertyValue("flex-direction") === "column") {
-        mainElement.style.flexDirection = "row";
-        mainElement.style.justifyContent = "center";
-        mainElement.style.alignItems = "start";
-
-        toggleVS();
-        toggleComputerMoveImage();
-    } else {
+    if(buttonClicked instanceof HTMLElement && (buttonClicked.className === "next-round hidden" || buttonClicked.className === "next-match hidden")){
         mainElement.style.flexDirection = "column";
         mainElement.style.justifyContent = "start";
         mainElement.style.alignItems = "center";
 
         toggleVS();
         toggleComputerMoveImage();
+    } else if(narrowView.matches){
+        mainElement.style.flexDirection = "column";
+        mainElement.style.justifyContent = "start";
+        mainElement.style.alignItems = "center";
+
+        toggleVS();
+        toggleComputerMoveImage();
+    } else{
+        mainElement.style.flexDirection = "row";
+        mainElement.style.justifyContent = "center";
+        mainElement.style.alignItems = "start";
+
+        toggleVS();
+        toggleComputerMoveImage();
     }
 }
+

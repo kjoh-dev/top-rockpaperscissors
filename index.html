@@ -19,17 +19,23 @@
             <div class="computer-display">
                 <img class="computer-move-image" src="img/move-hidden.png" alt="Hand(s) showing computer's rock/paper/scissors gestures">
             </div>
+            <div class="credits">
+                <div>Code & Design by <a href="https://github.com/kjoh-dev" target="_blank"> <strong>kjoh</strong></a></div>
+                <div>Image by <a href="https://pixabay.com/users/openclipart-vectors-30363/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=149295"><strong>OpenClipart-Vectors</strong></a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=149295" target="_blank">Pixabay</a></div>
+            </div>
         </main>
-        <div class="play-buttons">
-            <button data-play="rock" class="rock">ROCK</button>
-            <button data-play="paper" class="paper">PAPER</button>
-            <button data-play="scissors" class="scissors">SCISSORS</button>
+        <div class="title">
+            <button class="start"> NEW MATCH </button>
+        </div>
+        <div class="play-buttons hidden">
+            <button data-play="rock" class="rock hidden">ROCK</button>
+            <button data-play="paper" class="paper hidden">PAPER</button>
+            <button data-play="scissors" class="scissors hidden">SCISSORS</button>
         </div>
         <div class="round-end-buttons">
             <button class="hidden next-round">NEXT ROUND >>></button>
             <button class="hidden next-match">ANOTHER MATCH?</button>
         </div>
-
         <p></p>
         <audio data-play="rock" src="wav/punch.wav"></audio>
         <audio data-play="paper" src="wav/slap.wav"></audio>

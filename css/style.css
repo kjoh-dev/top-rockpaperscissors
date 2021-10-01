@@ -18,6 +18,7 @@ main {
     justify-content: start;
     align-items: center;
     gap: 24px;
+
 }
 
 p {
@@ -26,16 +27,11 @@ p {
     text-align: center;
     font-size: 36px;
     font-style: normal;
-    border-top: 1px groove blue;
+    border-top: 1px groove navy;
     border-bottom: 3px groove navy;
 }
 
-.hidden {
-    opacity: 0;
-    font-size: 0px;
-    padding: 0px;
-    margin: 0px;
-}
+
 
 .player-move-image{
     transition-property: flex-direction, transform;
@@ -74,7 +70,6 @@ img {
     margin: auto;
     width: 100%;
     height: auto;
-    /* border: 1px solid blue; */
 }
 
 .play-buttons, .round-end-buttons {
@@ -86,7 +81,6 @@ img {
     justify-content: space-evenly;
     align-items: start;
     column-gap: 16px;
-    /* border: 1px solid green; */
     margin-top: 16px;
 }
 .round-end-buttons {
@@ -104,3 +98,46 @@ button {
     height: auto;
     flex: 1 1 0;
 }
+
+.credits{
+    z-index: 1;
+    width: 100%;;
+    margin-top: -5%;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    
+    color: white;
+    text-shadow: 1px 1px black;
+}
+.credits a{
+    text-decoration: none;
+    color: white;
+    text-shadow: 1px 0px 3px black;
+}
+
+.title{
+    align-self: center;
+}
+.start{
+    padding: 0px 36px;
+    font-size: 36px;
+}
+
+.hidden {
+    display: none;
+    opacity: 0;
+    font-size: 0px;
+    padding: 0px;
+    margin: 0px;
+    border-width: 0px;
+}
+
+@media screen and (max-width: 600px) {
+    main{
+        flex-direction: column !important;
+        justify-content: start !important;
+        align-items: center !important;
+    }
+} 
